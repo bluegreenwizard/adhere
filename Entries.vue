@@ -16,6 +16,8 @@
                 </label>
                 <textarea 
                     class="textarea"
+                    :class="{ 'is-danger': !isAdherent(entryIndex) }"
+                    :placeholder="!isAdherent(entryIndex) ? 'Explanation Required' : ''"
                     v-model="current.excuse">
                 </textarea>
             </div>
@@ -36,7 +38,9 @@
                             <td>
                                 <button 
                                     class="button is-info is-fullwidth"
-                                    :class="{ 'is-outlined': entryIndex !== i }"
+                                    :class="{ 
+                                        'is-outlined': entryIndex !== i,
+                                        'is-danger': !isAdherent(i) }"
                                     @click="$emit('selectEntry', i)"> 
                                     Select
                                 </button>
@@ -56,12 +60,13 @@
 </template>
 
 <script>
-import dateFns from 'date-fns';
+import hlp from './helpers.js';
 
 export default {
     props: {
         schedule: Array,
-        entryIndex: Number
+        entryIndex: Number,
+        isAdherent: Function
     },
     data() {
         return {

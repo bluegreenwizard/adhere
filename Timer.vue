@@ -7,7 +7,7 @@
             <button
                 class="button is-large is-success"
                 @click="logTime">
-                Go on {{ nextBreakType }}
+                Go on {{ entryIndex % 2 === 0 ? 'Break' : 'Lunch' }}
             </button>
         </span>
     </div>
@@ -19,18 +19,19 @@ import dateFns from 'date-fns';
 export default {
     props: {
         schedule: Array,
-        entryIndex: Number
+        entryIndex: Number,
+        isAdherent: Function
     },
     data() {
         return {
-            currentTime: new Date,
-            nextBreakType: 'Break'
+            currentTime: new Date
         }
     },
     methods: {
         logTime() {
             this.$emit('logTime', this.hhmm);
-            if (this.entryIndex + 1 < this.schedule.length) {
+            if (this.entryIndex + 1 < this.schedule.length 
+                && this.isAdherent(this.entryIndex)) {
                 this.$emit('nextEntry', this.entryIndex + 1);
             }
         }

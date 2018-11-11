@@ -1,20 +1,22 @@
 <template>
     <div id="main" class="container">
-        <setup 
+        <!-- <setup 
             @start="initEntries"
             :schedule="schedule"
             :entry-index="entryIndex">
-        </setup>
+        </setup> -->
         <entries 
             @selectEntry="setEntryIndex"
             :schedule="schedule"
-            :entry-index="entryIndex">
+            :entry-index="entryIndex"
+            :is-adherent="isAdherent">
         </entries>
         <timer
             @logTime="setActual"
             @nextEntry="setEntryIndex"
             :schedule="schedule"
-            :entry-index="entryIndex">
+            :entry-index="entryIndex"
+            :is-adherent="isAdherent">
         </timer>
     </div>
 </template>
@@ -23,6 +25,7 @@
 import Setup from './Setup.vue';
 import Entries from './Entries.vue';
 import Timer from './Timer.vue';
+import hlp from './helpers.js';
 
 export default {
     components: {
@@ -36,9 +39,9 @@ export default {
             entryIndex: 0,
             currentTime: new Date,
             schedule: [
-                { scheduled: "10:00", actual: "", excuse: ""},
-                { scheduled: "12:00", actual: "", excuse: ""},
-                { scheduled: "15:00", actual: "", excuse: ""}
+                { scheduled: '10:00', actual: "", excuse: ""},
+                { scheduled: '12:00', actual: "", excuse: ""},
+                { scheduled: '15:00', actual: "", excuse: ""}
             ]
         }
     },
@@ -55,7 +58,20 @@ export default {
         },
         setActual(time) {
             this.schedule[this.entryIndex].actual = time;
+        },
+        isAdherent(i = this.entryIndex) {
+            const difference = hlp.differenceInMinutes(
+                this.schedule[i].scheduled,
+                this.schedule[i].actual
+            ) || 0;
+            return difference <= 5;
         }
+    },
+    computed: {
+        
+    },
+    created () {
+        
     }
 }
 </script>

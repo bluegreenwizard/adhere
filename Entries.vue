@@ -1,7 +1,7 @@
 <template>
     <div class="container box">
         <div class="columns is-mobile">
-            <div class="column content is-large">
+            <div class="column content">
                 <label class="label">
                     Scheduled: 
                     <input 

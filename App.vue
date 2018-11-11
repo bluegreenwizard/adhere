@@ -60,10 +60,11 @@ export default {
             this.schedule[this.entryIndex].actual = time;
         },
         isAdherent(i = this.entryIndex) {
-            const difference = hlp.differenceInMinutes(
+            const difference = Math.abs(hlp.differenceInMinutes(
                 this.schedule[i].scheduled,
                 this.schedule[i].actual
-            ) || 0;
+            ) || 0);
+
             return difference <= 5;
         }
     },

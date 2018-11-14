@@ -16,7 +16,7 @@
                 </label>
                 <textarea 
                     class="textarea"
-                    :class="{ 'is-danger': !isAdherent(entryIndex) }"
+                    :class="{ 'is-danger': !isAdherent(entryIndex) && current.excuse === '' }"
                     :placeholder="!isAdherent(entryIndex) ? 'Explanation Required' : ''"
                     v-model="current.excuse">
                 </textarea>
@@ -40,7 +40,7 @@
                                     class="button is-info is-fullwidth"
                                     :class="{ 
                                         'is-outlined': entryIndex !== i,
-                                        'is-danger': !isAdherent(i) }"
+                                        'is-danger': !isAdherent(i) && entry.excuse === '' }"
                                     @click="$emit('selectEntry', i)"> 
                                     Select
                                 </button>
@@ -50,7 +50,8 @@
                 </table>
                 <button 
                     class="button is-success is-fullwidth"
-                    :disabled="!entriesAreComplete">
+                    :disabled="!entriesAreComplete"
+                    @click="$emit('showComplete')">
                     Complete
                 </button>
                 <br>

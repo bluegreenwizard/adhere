@@ -1,12 +1,13 @@
 <template>
     <div id="main" class="container">
-        <!-- <setup 
+        <setup 
             @start="initEntries"
             :schedule="schedule"
             :entry-index="entryIndex">
-        </setup> -->
+        </setup>
         <entries 
             @selectEntry="setEntryIndex"
+            @showComplete="toggleComplete"
             :schedule="schedule"
             :entry-index="entryIndex"
             :is-adherent="isAdherent"
@@ -19,6 +20,11 @@
             :entry-index="entryIndex"
             :is-adherent="isAdherent">
         </timer>
+        <complete 
+            @hideComplete="toggleComplete"
+            :schedule="schedule"
+            v-if="showComplete">
+        </complete>
     </div>
 </template>
 
@@ -26,13 +32,15 @@
 import Setup from './Setup.vue';
 import Entries from './Entries.vue';
 import Timer from './Timer.vue';
+import Complete from './Complete.vue';
 import hlp from './helpers.js';
 
 export default {
     components: {
         Setup,
         Entries,
-        Timer
+        Timer,
+        Complete
     },
     data() {
         return {
@@ -43,7 +51,8 @@ export default {
                 { scheduled: '10:00', actual: "10:00", excuse: ""},
                 { scheduled: '12:00', actual: "12:00", excuse: ""},
                 { scheduled: '15:00', actual: "", excuse: ""}
-            ]
+            ],
+            showComplete: false
         }
     },
     methods: {
@@ -67,6 +76,9 @@ export default {
             ) || 0);
 
             return difference <= 5;
+        },
+        toggleComplete() {
+            this.showComplete = !this.showComplete;
         }
     },
     computed: {

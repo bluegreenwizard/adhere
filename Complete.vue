@@ -7,7 +7,22 @@
         <div class="modal-content box">
             <h1 class="title">Schedule Adherence Table</h1>
             <div id="complete" class="container">
-
+                <table class="table is-bordered is-striped is-fullwidth">
+                    <thead class="thead">
+                        <th>Scheduled</th>
+                        <th>Actual</th>
+                        <th>Reason for Discrepancy</th>
+                    </thead>
+                    <tbody class="tbody">
+                        <tr
+                            v-for="(entry, i) in schedule"
+                            :key="i">
+                            <td>{{ entry.scheduled }}</td>
+                            <td>{{ entry.actual }}</td>
+                            <td>{{ entry.excuse || "NA" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div 

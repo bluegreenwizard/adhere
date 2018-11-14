@@ -1,15 +1,23 @@
 <template>
-    <div class="box level is-mobile">
-        <span class="level-left">
+    <div class="box columns level is-mobile">
+        <div class="column is-half">
+            <h3>Additional Notes</h3>
+            <textarea 
+                class="textarea is-small"
+                v-model="additionalNotes">
+
+            </textarea>
+        </div>
+        <div class="column content is-large is-one-quarter">
             <p id="time">{{ hhmm }}</p>
-        </span>
-        <span class="level-right">
+        </div>
+        <div class="column is-one-quarter">
             <button
-                class="button is-large is-success"
+                class="button is-large is-success is-fullwidth"
                 @click="logTime">
                 Go on {{ entryIndex % 2 === 0 ? 'Break' : 'Lunch' }}
             </button>
-        </span>
+        </div>
     </div>
 </template>
 
@@ -19,6 +27,7 @@ import dateFns from 'date-fns';
 export default {
     props: {
         schedule: Array,
+        additionalNotes: String,
         entryIndex: Number,
         isAdherent: Function
     },
@@ -52,6 +61,6 @@ export default {
 
 <style lang="sass">
 #time
-    font-size: 2.8rem
+    font-size: 3.5rem
 
 </style>

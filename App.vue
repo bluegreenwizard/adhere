@@ -17,6 +17,7 @@
             @logTime="setActual"
             @nextEntry="setEntryIndex"
             :schedule="schedule"
+            :additional-notes="additionalNotes"
             :entry-index="entryIndex"
             :is-adherent="isAdherent">
         </timer>
@@ -52,6 +53,7 @@ export default {
                 { scheduled: '12:00', actual: "12:00", excuse: ""},
                 { scheduled: '15:00', actual: "", excuse: ""}
             ],
+            additionalNotes: "",
             showComplete: false
         }
     },

@@ -9,7 +9,8 @@
             @selectEntry="setEntryIndex"
             :schedule="schedule"
             :entry-index="entryIndex"
-            :is-adherent="isAdherent">
+            :is-adherent="isAdherent"
+            :entries-are-complete="entriesAreComplete">
         </entries>
         <timer
             @logTime="setActual"
@@ -39,8 +40,8 @@ export default {
             entryIndex: 0,
             currentTime: new Date,
             schedule: [
-                { scheduled: '10:00', actual: "", excuse: ""},
-                { scheduled: '12:00', actual: "", excuse: ""},
+                { scheduled: '10:00', actual: "10:00", excuse: ""},
+                { scheduled: '12:00', actual: "12:00", excuse: ""},
                 { scheduled: '15:00', actual: "", excuse: ""}
             ]
         }
@@ -69,7 +70,15 @@ export default {
         }
     },
     computed: {
-        
+        entriesAreComplete() {
+            return this.schedule.every((entry, i) => {
+                if (this.isAdherent(i)) {
+                    return entry.scheduled !== "" && entry.actual !== "";
+                } else {
+                    return entry.scheduled !== "" && entry.actual !== "" && entry.excuse !== "";
+                }
+            });
+        }
     },
     created () {
         

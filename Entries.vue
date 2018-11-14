@@ -50,7 +50,7 @@
                 </table>
                 <button 
                     class="button is-success is-fullwidth"
-                    disabled>
+                    :disabled="!entriesAreComplete">
                     Complete
                 </button>
                 <br>
@@ -66,7 +66,8 @@ export default {
     props: {
         schedule: Array,
         entryIndex: Number,
-        isAdherent: Function
+        isAdherent: Function,
+        entriesAreComplete: Boolean
     },
     data() {
         return {

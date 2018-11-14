@@ -60,8 +60,6 @@
 </template>
 
 <script>
-import hlp from './helpers.js';
-
 export default {
     props: {
         schedule: Array,

@@ -4,8 +4,7 @@
             <h3>Additional Notes</h3>
             <textarea 
                 class="textarea is-small"
-                v-model="additionalNotes">
-
+                v-model="additionalNotes.note">
             </textarea>
         </div>
         <div class="column content is-large is-one-quarter">
@@ -27,7 +26,7 @@ import dateFns from 'date-fns';
 export default {
     props: {
         schedule: Array,
-        additionalNotes: String,
+        additionalNotes: Object,
         entryIndex: Number,
         isAdherent: Function
     },

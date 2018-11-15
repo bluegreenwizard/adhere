@@ -23,6 +23,16 @@
                         </tr>
                     </tbody>
                 </table>
+                <table class="table is-bordered is-fullwidth">
+                    <thead class="thead">
+                        <th>Additional Notes</th>
+                    </thead>
+                    <tbody class="tbody">
+                        <tr>
+                            <td>{{ additionalNotes.note }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
         <div 
@@ -36,7 +46,8 @@
 <script>
 export default {
     props: {
-        schedule: Array
+        schedule: Array,
+        additionalNotes: Object
     },
     data() {
         return {

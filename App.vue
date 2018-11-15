@@ -24,6 +24,7 @@
         <complete 
             @hideComplete="toggleComplete"
             :schedule="schedule"
+            :additional-notes="additionalNotes"
             v-if="showComplete">
         </complete>
     </div>
@@ -53,7 +54,9 @@ export default {
                 { scheduled: '12:00', actual: "12:00", excuse: ""},
                 { scheduled: '15:00', actual: "", excuse: ""}
             ],
-            additionalNotes: "",
+            additionalNotes: {
+                note: ""
+            },
             showComplete: false
         }
     },

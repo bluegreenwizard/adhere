@@ -23,7 +23,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table is-bordered is-fullwidth">
+                <table 
+                    class="table is-bordered is-fullwidth"
+                    v-if="additionalNotes.note !== ''">
                     <thead class="thead">
                         <th>Additional Notes</th>
                     </thead>

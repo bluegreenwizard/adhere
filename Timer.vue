@@ -7,15 +7,20 @@
                 v-model="additionalNotes.note">
             </textarea>
         </div>
-        <div class="column content is-large is-one-quarter">
-            <p id="time">{{ hhmm }}</p>
-        </div>
-        <div class="column is-one-quarter">
-            <button
-                class="button is-large is-success is-fullwidth"
-                @click="logTime">
-                Go on {{ entryIndex % 2 === 0 ? 'Break' : 'Lunch' }}
-            </button>
+        <div class="column">
+            <div class="colums">
+                <div class="column">
+                    <p id="time">{{ hhmm }}</p>
+                </div>
+                <div class="column">
+                    <button
+                        class="button is-medium is-success"
+                        id="log-btn"
+                        @click="logTime">
+                        Go on {{ entryIndex % 2 === 0 ? 'Break' : 'Lunch' }}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -60,6 +65,10 @@ export default {
 
 <style lang="sass">
 #time
-    font-size: 3.5rem
+    font-size: 3rem
+    text-align: center
+#log-btn
+    display: block
+    margin: auto
 
 </style>

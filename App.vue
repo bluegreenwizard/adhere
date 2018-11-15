@@ -3,7 +3,8 @@
         <setup 
             @start="initEntries"
             :schedule="schedule"
-            :entry-index="entryIndex">
+            :entry-index="entryIndex"
+            v-if="showSetup">
         </setup>
         <entries 
             @selectEntry="setEntryIndex"
@@ -27,6 +28,10 @@
             :additional-notes="additionalNotes"
             v-if="showComplete">
         </complete>
+        <div class="level is-mobile">
+            <p>Last saved: {{ lastSavedString }} ago.</p>
+            <button @click="saveToLocal" class="button is-small is-outlined is-black">Save Now</button>
+        </div>
     </div>
 </template>
 
@@ -36,6 +41,7 @@ import Entries from './Entries.vue';
 import Timer from './Timer.vue';
 import Complete from './Complete.vue';
 import hlp from './helpers.js';
+import dateFns from 'date-fns';
 
 export default {
     components: {
@@ -46,9 +52,9 @@ export default {
     },
     data() {
         return {
-            view: "setup",
             entryIndex: 0,
-            currentTime: new Date,
+            currentTime: Date.now(),
+            lastSaved: null,
             schedule: [
                 { scheduled: '10:00', actual: "10:00", excuse: ""},
                 { scheduled: '12:00', actual: "12:00", excuse: ""},
@@ -57,7 +63,8 @@ export default {
             additionalNotes: {
                 note: ""
             },
-            showComplete: false
+            showComplete: false,
+            showSetup: true
         }
     },
     methods: {
@@ -84,6 +91,15 @@ export default {
         },
         toggleComplete() {
             this.showComplete = !this.showComplete;
+        },
+        saveToLocal() {
+            this.lastSaved = Date.now();
+            localStorage.myAdhereApp = JSON.stringify({
+                schedule: this.schedule,
+                additionalNotes: this.additionalNotes,
+                currentTime: this.currentTime,
+                lastSaved: this.lastSaved
+            });
         }
     },
     computed: {
@@ -95,10 +111,31 @@ export default {
                     return entry.scheduled !== "" && entry.actual !== "" && entry.excuse !== "";
                 }
             });
+        },
+        lastSavedString() {
+            if (!this.lastSaved) {
+                return 'never'
+            } else {
+                return dateFns.distanceInWords(this.lastSaved, this.currentTime);
+            }
         }
     },
-    created () {
+    mounted() {
+        if (localStorage.myAdhereApp) {
+            const myAdhereApp = JSON.parse(localStorage.myAdhereApp);
+            console.table(myAdhereApp);
+            if (dateFns.isSameDay(myAdhereApp.currentTime, Date.now())) {
+                this.schedule = myAdhereApp.schedule;
+                this.additionalNotes = myAdhereApp.additionalNotes;
+                this.lastSaved = myAdhereApp.lastSaved;
+                this.showSetup = false;
+            }
+        }
         
+        setInterval(this.saveToLocal, 1000 * 60 * 60);
+        setInterval(() => {
+            this.currentTime = Date.now()
+        }, 1000);
     }
 }
 </script>

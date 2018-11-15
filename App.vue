@@ -30,7 +30,11 @@
         </complete>
         <div class="level is-mobile">
             <p>Last saved: {{ lastSavedString }} ago.</p>
-            <button @click="saveToLocal" class="button is-small is-outlined is-black">Save Now</button>
+            <button 
+                @click="saveToLocal"
+                class="button is-small is-outlined is-black">
+                Save Now
+            </button>
         </div>
     </div>
 </template>
@@ -92,7 +96,8 @@ export default {
         toggleComplete() {
             this.showComplete = !this.showComplete;
         },
-        saveToLocal() {
+        saveToLocal(e) {
+            e.preventDefault();
             this.lastSaved = Date.now();
             localStorage.myAdhereApp = JSON.stringify({
                 schedule: this.schedule,
@@ -123,7 +128,6 @@ export default {
     mounted() {
         if (localStorage.myAdhereApp) {
             const myAdhereApp = JSON.parse(localStorage.myAdhereApp);
-            console.table(myAdhereApp);
             if (dateFns.isSameDay(myAdhereApp.currentTime, Date.now())) {
                 this.schedule = myAdhereApp.schedule;
                 this.additionalNotes = myAdhereApp.additionalNotes;
